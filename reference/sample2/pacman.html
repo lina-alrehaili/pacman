@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+	<title> Pacman Game </title>
+	<style type="text/css">
+		#container {
+			background-color: black;
+			width: 840px;
+			height: 1000px;
+			position: absolute;
+			margin-top: 50px;
+			margin-left: 50px;
+		}
+		.score {
+			color: black;
+			margin-top: 10px;
+			font-size: 30px;
+			font-family: Impact;
+		}
+		.lives {
+			color: black;
+			margin-top: 10px;
+			font-size: 30px;
+			font-family: Impact;
+		}
+		/* 0 */
+		.blank {
+			width: 30px;
+			height: 30px;
+		}
+		/* 1 */
+		.brick {
+			background-color: blue;
+			width: 30px;
+			height: 30px;
+		}
+		/* 2 */
+		.coin {
+			background-image: url('assets/coin.png');
+			background-size: 100%;
+			width: 30px;
+			height: 30px;
+		}
+		/* 3 */
+		.cherry {
+			background-image: url('assets/cherry.png');
+			background-size: 100%;
+			width: 30px;
+			height: 30px;
+		}
+		.pacman {
+			background-image: url('assets/pacman.png');
+			background-size: cover;
+			width: 30px;
+			height: 30px;
+		}
+		.pinky {
+			background-image: url('assets/pinky.png');
+			background-size: cover;
+			width: 30px;
+			height: 30px;
+		}
+		.inky {
+			background-image: url('assets/inky.png');
+			background-size: cover;
+			width: 30px;
+			height: 30px;
+		}
+		.blinky {
+			background-image: url('assets/blinky.png');
+			background-size: cover;
+			width: 30px;
+			height: 30px;
+		}
+		.clyde {
+			background-image: url('assets/clyde.png');
+			background-size: cover;
+			width: 30px;
+			height: 30px;
+		}
+		td {
+			width: 30px;
+			height: 30px;
+			position: relative;
+			
+		}
+		table {
+			width: 840px;
+			height: 930px;
+			border-spacing: 0px;
+			position: relative;
+		}
+	</style>
+</head>
+
+<body>
+	<script src="pacman.js"></script>
+	<div id='score'></div>
+	<div id='lives'></div>
+	<div id='container'>
+		<table id='world'>
+
+		</table>
+	</div>
+</body>
+
+</html>

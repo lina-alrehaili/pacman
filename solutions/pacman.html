@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Our Pacman Demo</title>
+		<link rel="stylesheet" href="pacman.css" >
+		<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+	$(document).ready(function(){
+
+		var world = [
+			[2,2,2,2,2,2,2,2,2,2,2,2],
+			[2,0,1,2,1,1,1,1,1,1,1,2],
+			[2,2,1,2,1,2,1,2,1,1,1,2],
+			[2,1,1,2,1,1,1,2,4,2,1,2],
+			[2,1,2,2,2,2,1,1,2,1,1,2],
+			[2,1,1,1,1,4,1,1,1,1,1,2],
+			[2,1,1,1,2,1,2,1,1,4,1,2],
+			[2,1,1,1,1,1,1,1,2,1,1,2],
+			[2,1,1,1,1,1,2,1,4,2,1,2],
+			[2,1,2,1,4,1,2,4,1,1,1,2],
+			[2,1,1,1,2,1,2,1,1,1,0,2],
+			[2,2,2,2,2,2,2,2,2,2,2,2]
+		];
+
+
+		var score = 0;
+		var gameActive = true;
+		var lives = 3;
+
+
+		var pacman = {
+			x: 1,
+			y: 1
+		};
+
+		function displayWorld(){
+			var output = "";
+			for (var i = 0; i < world.length; i++) {
+				output += '<div class="row">\n'
+				for (var j = 0; j < world[i].length; j++) {
+					if(world[i][j] == 2 ) {
+						output += "\t<div class='brick'></div>\n";
+					} else if(world[i][j] == 1 ) {
+						output += "\t<div class='coin'></div>\n";
+					} else if(world[i][j] == 0 ) {
+						output += "\t<div class='empty'></div>\n";
+					} else if(world[i][j] == 4 ) {
+					output += "\t<div class='empty'></div>\n";
+					}
+				}
+				output += "</div>\n"
+			}
+			// console.log(output)
+			$('#gameboard').html(output);
+		}
+
+		document.onkeydown = function(e){
+			// console.log(e.keyCode)
+			if(e.keyCode == 37) {
+				if (world[pacman.y][pacman.x-1] !== 2){
+					pacman.x --;
+				}
+				$("#pacman").css('transform', 'rotate(180deg)')
+			}
+			else if(e.keyCode == 38) {
+				if (world[pacman.y-1][pacman.x] !== 2){
+					pacman.y --;
+				}
+				$("#pacman").css('transform', 'rotate(270deg)')
+				// moveGhost();
+			}
+			else if(e.keyCode == 39) {
+				if (world[pacman.y][pacman.x+1] !== 2){
+					pacman.x ++;
+				}
+				$("#pacman").css('transform', 'rotate(0deg)')
+			}
+			else if(e.keyCode == 40) {
+				if (world[pacman.y+1][pacman.x] !== 2){
+					pacman.y ++;
+				}
+				$("#pacman").css('transform', 'rotate(90deg)')
+			}
+			if (world[pacman.y][pacman.x] === 1) {
+				world[pacman.y][pacman.x] = 0;
+				score += 100;
+			}
+			displayScore();
+			if (gameActive) {
+				displayPacman();
+				displayWorld();
+			}
+		}
+
+		function displayPacman(){
+			document.getElementById('pacman').style.top = pacman.y*26+11+"px";
+			document.getElementById('pacman').style.left = pacman.x*26+11+"px";
+		}
+
+		function displayScore(){
+			$('#scoreText').text(score);
+			$('#livesText').text(lives);
+		}
+
+		var ghost = {
+			x: 10,
+			y: 10
+		}
+
+		function displayGhost(){
+			document.getElementById('ghost').style.top = ghost.y*26+10+"px";
+			document.getElementById('ghost').style.left = ghost.x*26+10+"px";
+		}
+
+		function moveGhost(){
+			var random = Math.floor(Math.random() * 4) + 37;
+			// var random = 40
+			console.log(random)
+			console.log(world[ghost.y][ghost.x])
+			switch (random) {
+				case 37:
+				console.log('in 37')
+					if (world[ghost.y][ghost.x-1] != 2){
+						ghost.x --;
+					}
+					break;
+				case 38:
+				console.log('in 38')
+					if (world[ghost.y-1][ghost.x] != 2){
+						ghost.y --;
+					}
+					break;
+				case 39:
+				console.log('in 39')
+					if (world[ghost.y][ghost.x+1] != 2){
+						ghost.x ++;
+					}
+					break;
+				case 40:
+				console.log('in 40')
+					if (world[ghost.y+1][ghost.x] != 2){
+						ghost.y ++;
+					}
+					break;
+				default:
+					console.log('whoa we are breaking here')
+			}
+			if (ghost.y === pacman.y && ghost.x === pacman.x) {
+				lives -= 1;
+			}
+			if (lives === 0){
+				gameActive = false;
+			}
+			displayScore();
+			if (gameActive){
+				displayGhost();
+				displayWorld();
+			}
+		}
+		setInterval(moveGhost, 500);
+		console.log('hello')
+		//check game over
+		//implement game over
+		//implement ghost
+		//high score
+		//multiplayer
+
+		displayWorld();
+		displayPacman();
+		displayScore();
+		displayGhost();
+		moveGhost();
+
+	}); //end of document.ready
+		</script>
+	</head>
+	<body>
+		<div id="pacman"></div>
+		<div id="ghost"></div>
+		<div id="gameboard"></div>
+		<div id="scoreBox">
+			<p>score: <span id="scoreText"></span></p>
+			<p>lives: <span id="livesText"></span></p>
+		</div>
+
+	</body>
+</html>
